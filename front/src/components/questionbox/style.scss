@@ -1,0 +1,16 @@
+.input {
+    transition: .3s all ease-in-out;
+    font-size: 2rem;
+    padding: 5px;
+    line-height: 2rem;
+    background: 0;
+    max-width: 80%;
+    width: 18rem;
+    border: 0;
+    border-bottom: 2px solid var(--grape);
+    caret-color: var(--blue);
+    &:focus {
+        border-bottom: 2px solid  var(--blue);
+        outline: none;
+    }
+}

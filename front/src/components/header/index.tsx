@@ -1,14 +1,12 @@
 import { h } from 'preact';
-import { Link } from 'preact-router/match';
-const style = require('./style.css');
+import { Link } from 'preact-router/match'
+const style = require('./style.scss');
 
 const Header = () => (
 	<header class={style.header}>
-		<h1>Preact App</h1>
+		<Link activeClassName="" href="/"><h1>Bubble</h1></Link>
 		<nav>
-			<Link activeClassName={style.active} href="/">Home</Link>
-			<Link activeClassName={style.active} href="/profile">Me</Link>
-			<Link activeClassName={style.active} href="/profile/john">John</Link>
+			<a href="https://github.com/necroplankton" target="_blank" rel="noopener noreferrer" >Gihub</a>
 		</nav>
 	</header>
 );

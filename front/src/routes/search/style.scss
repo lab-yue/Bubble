@@ -1,0 +1,46 @@
+.result{
+    transition: .3s all ease-in-out;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    &:hover{
+        background-color: var(--maya);
+        transform: translateX(10px);
+    }
+}
+.title{
+    margin-top: 0;
+    color: #000;//var(--grape);
+    font-size: 1.4rem;
+    text-shadow: 0 0 10px #fff;
+}
+
+cite{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+    display: inline-block;
+}
+
+.form{
+    font-size: 1.6rem;
+    line-height: 1.6rem;
+}
+
+.input {
+    font-size: 2rem;
+    line-height: 2rem;
+    transition: .3s all ease-in-out;
+    padding: 5px;
+    background: #fff;
+    max-width: 80%;
+    width: 18rem;
+    border: 0;
+    border-bottom: 2px solid var(--grape);
+    caret-color: var(--blue);
+    &:focus {
+        border-bottom: 2px solid  var(--blue);
+        outline: none;
+    }
+}

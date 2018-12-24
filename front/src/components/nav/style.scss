@@ -1,0 +1,29 @@
+.nav {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button {
+    $size: 1.6rem;
+    width: 2rem;
+    font-size: $size;
+    line-height: $size;
+    font-weight: bold;
+    width: 4rem;
+    margin: 0;
+    color: var(--brick);
+    border-radius: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+
+    &:active {
+        background-color: var(--brick);
+        color: #fff;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+}
