@@ -6,13 +6,13 @@ import config
 
 app = Sanic()
 
-CORS(app, resources={rf"/search*": {"origins": "*"}})
+CORS(app, resources={rf"/get*": {"origins": "*"}})
 
 @app.route("/", methods=['GET'])
 async def test(request):
     return f'<h1> VER: {config.app_ver}</h1>'
 
-@app.route(f"/search", methods=['GET'])
+@app.route(f"/get", methods=['GET'])
 async def query_string(request):
     print(request.args)
     q = request.args.get('q',{'error':'No q'})

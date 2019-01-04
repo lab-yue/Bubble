@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+
+  sanic:
+    build: ./server
+    ports:
+    - "8000:8000"
+
+  preact:
+    build: ./front
+    ports:
+    - "8080:8080"

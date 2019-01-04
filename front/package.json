@@ -7,7 +7,7 @@
     "start:production": "npm run -s serve",
     "start:development": "npm run -s dev",
     "build": "preact build --no-prerender",
-    "serve": "preact build --no-prerender && preact serve",
+    "serve": "superstatic build --host 0.0.0.0 --port 8080",
     "dev": "preact watch",
     "lint": "eslint src"
   },
@@ -23,17 +23,18 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.2.1",
     "per-env": "^1.0.2",
-    "preact-cli": "^2.1.0",
     "preact-render-spy": "^1.2.1"
   },
   "dependencies": {
     "node-sass": "^4.11.0",
     "preact": "^8.2.6",
+    "preact-cli": "^2.1.0",
     "preact-cli-plugin-env-vars": "^1.2.1",
     "preact-cli-plugin-typescript": "^0.2.2",
     "preact-compat": "^3.17.0",
     "preact-router": "^2.5.7",
     "rc-css-transition-group": "^2.1.4",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "superstatic": "^6.0.4"
   }
 }
