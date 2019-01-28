@@ -2,6 +2,11 @@
     "compilerOptions": {
         "allowJs": false,
         "jsx": "react",
-        "jsxFactory": "h"
-    }
+        "jsxFactory": "h",
+        "lib": [
+            "es2016",
+            "es2015",
+            "dom"
+        ]
+    },
 }

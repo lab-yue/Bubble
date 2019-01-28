@@ -4,7 +4,7 @@ body {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	background: var(--pale);
+	background: #333;
 	font-family: 'Helvetica Neue', arial, sans-serif;
 	font-weight: 400;
 	color: #444;
@@ -21,6 +21,7 @@ a {
 }
 
 :root {
+	--accent: #607D8B;
 	--maya: #a9eee6;
 	--pale: #fefaec;
 	--brick: #f38181;

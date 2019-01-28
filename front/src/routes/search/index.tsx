@@ -1,37 +1,43 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
-import Navigator from '../../components/nav'
-import * as Type from '../../types'
+import Navigator from '../../components/nav';
+import * as Type from '../../types';
 
 const style = require('./style.scss');
 
 const Result = (props: Type.ResultProps) => (
-    <li className={style.result}>
-        <a href={props.data.url} target="_blank" rel="noopener noreferrer" >
-            <h3 className={style.title}>{props.data.title}</h3>
-            <cite>{props.data.url}</cite>
-        </a>
+    <li className={style.resultBlock}>
+        <div className={style.result}>
+            <a href={props.data.url} target="_blank" rel="noopener noreferrer" >
+                <h3 className={style.title}>{props.data.title}</h3>
+                <cite>{props.data.url}</cite>
+            </a>
+        </div>
     </li>
 )
 
 export default class Search extends Component<Type.HomeProps>{
 
+    placeholder = [...Array(10)].fill({
+        title: 'searching...',
+        url: ' (｡･ω･｡) (｡･ω･｡) (｡･ω･｡) '
+    })
+
     state: Type.SearchState = {
         searchText: "",
-        searchResultList: [],
+        searchResultList: this.placeholder,
         offset: 0
     }
 
-    componentWillMount() {
+    async componentWillMount() {
 
         const params = new URLSearchParams(window.location.search)
-
         const q = params.get('q')
         const offset = parseInt(params.get('offset'))
 
-        if (!isNaN(offset) ) {
+        if (!isNaN(offset)) {
             q
-                ? this.search(q, offset)
+                ? await this.search(q, offset)
                 : route('/')
         } else {
             route('/')
@@ -43,55 +49,61 @@ export default class Search extends Component<Type.HomeProps>{
         e.preventDefault()
     }
 
-    handleInput = (e: any) => {
+    handleInput = async (e: any) => {
         const q: string = e.target.value
-        this.search(q)
+        await this.search(q)
     }
 
-    search = (q: string, offset: number = 0) => {
+    search = async (q: string, offset: number = 0) => {
 
-        if (q === "") {
+        if (!q) {
             return
         }
-
         this.setState({
-            searchText: q
+            searchText: q,
+            searchResultList: this.placeholder,
+            offset: offset
         })
 
-        fetch(`${process.env.PREACT_APP_API}?q=${q}&offset=${offset}`, {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+
+        const res = await fetch(`${process.env.PREACT_APP_API}?q=${q}&offset=${offset}`, {
             mode: 'cors'
         })
-            .then(res => res.json())
-            .then(result => {
-                this.setState({
-                    searchResultList: result,
-                    offset: offset
-                })
-                console.log(result)
-            })
+
+        this.setState({
+            searchText: q,
+            searchResultList: await res.json(),
+            offset: offset
+        })
     }
 
-    changeOffset = (action: Type.NavigatorAction) => {
+    changeOffset = async (action: Type.NavigatorAction) => {
         if (action === 'forth') {
 
-            this.search(this.state.searchText, this.state.offset += 10)
+            await this.search(this.state.searchText, this.state.offset += 10)
         } else {
 
-            if (this.state.offset === 0){
+            if (this.state.offset === 0) {
                 return
             }
-            this.search(this.state.searchText, this.state.offset -= 10)
+            await this.search(this.state.searchText, this.state.offset -= 10)
         }
     }
 
     render(props: any, state: Type.SearchState) {
         return (
             <div>
+                <h1 className={style.h1}>Search</h1>
                 <form className={style.form} onSubmit={this.handleSubmit}>
-                    Search: <input onChange={this.handleInput} className={style.input} type="text" />
+                    <input
+                        onChange={this.handleInput}
+                        className={style.input}
+                        type="text"
+                    />
                 </form>
                 <Navigator changeOffset={this.changeOffset} />
-                <ul>
+                <ul rel="results">
                     {
                         state.searchResultList.map((result, id) => <Result key={id} data={result} />)
                     }

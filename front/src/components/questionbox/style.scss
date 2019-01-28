@@ -7,10 +7,11 @@
     max-width: 80%;
     width: 18rem;
     border: 0;
+    color: #fff;
     border-bottom: 2px solid var(--grape);
-    caret-color: var(--blue);
+    caret-color: var(--accent);
     &:focus {
-        border-bottom: 2px solid  var(--blue);
+        border-bottom: 2px solid  var(--accent);
         outline: none;
     }
 }

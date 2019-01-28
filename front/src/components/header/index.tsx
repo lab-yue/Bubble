@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { Link } from 'preact-router/match'
 const style = require('./style.scss');
 
-const Header = () => (
+export default () => (
 	<header class={style.header}>
 		<Link activeClassName="" href="/"><h1>Bubble</h1></Link>
 		<nav>
@@ -10,5 +10,3 @@ const Header = () => (
 		</nav>
 	</header>
 );
-
-export default Header;

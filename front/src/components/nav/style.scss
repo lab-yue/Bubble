@@ -12,13 +12,15 @@
     font-weight: bold;
     width: 4rem;
     margin: 0;
-    color: var(--brick);
+    color: #e0e0e0;
     border-radius: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #292929;
+    border: 1px solid var(--grape);
+    box-shadow: 0 0 5px #000;
+    transition: .3s all ease-in-out;
 
     &:active {
-        background-color: var(--brick);
+        background-color: var(--grape);
         color: #fff;
     }
 

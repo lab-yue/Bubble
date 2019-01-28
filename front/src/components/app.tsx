@@ -27,7 +27,6 @@ export default class App extends Component {
 						<Search path="/search" />
 					</Router>
 				</Layout>
-
 			</div>
 		);
 	}
