@@ -4,9 +4,17 @@ const style = require('./style.scss');
 
 export default () => (
 	<header class={style.header}>
-		<Link activeClassName="" href="/"><h1>Bubble</h1></Link>
+		<Link activeClassName="" href="/">
+			<h1>Bubble</h1>
+		</Link>
 		<nav>
-			<a href="https://github.com/necroplankton" target="_blank" rel="noopener noreferrer" >Gihub</a>
+			<a
+				href="https://github.com/necroplankton"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Github
+			</a>
 		</nav>
 	</header>
 );

@@ -8,6 +8,7 @@ export interface HomeProps {
 }
 
 export interface ResultProps {
+    searching: boolean
     data: SearchResult
     key: number
 }
@@ -25,8 +26,9 @@ export interface Question {
 
 
 export interface SearchState {
-    offset: number,
-    searchText: SearchText,
+    searching: boolean
+    offset: number
+    searchText: SearchText
     searchResultList: Array<SearchResult>
 }
 

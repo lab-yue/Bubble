@@ -8,9 +8,19 @@ const style = require('./style.scss');
 const Result = (props: Type.ResultProps) => (
     <li className={style.resultBlock}>
         <div className={style.result}>
-            <a href={props.data.url} target="_blank" rel="noopener noreferrer" >
-                <h3 className={style.title}>{props.data.title}</h3>
-                <cite>{props.data.url}</cite>
+            <a href={props.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <h3 className={`
+                    ${style.title}
+                    ${props.searching ? style.searching : ''}
+                `}>
+                    {props.data.title}
+                </h3>
+                <cite className={props.searching ? style.searching : ''}>
+                    {props.data.url}
+                </cite>
             </a>
         </div>
     </li>
@@ -19,12 +29,13 @@ const Result = (props: Type.ResultProps) => (
 export default class Search extends Component<Type.HomeProps>{
 
     placeholder = [...Array(10)].fill({
-        title: 'searching...',
-        url: ' (｡･ω･｡) (｡･ω･｡) (｡･ω･｡) '
+        title: 'searching',
+        url: 'searching'
     })
 
     state: Type.SearchState = {
-        searchText: "",
+        searching: false,
+        searchText: '',
         searchResultList: this.placeholder,
         offset: 0
     }
@@ -49,9 +60,12 @@ export default class Search extends Component<Type.HomeProps>{
         e.preventDefault()
     }
 
-    handleInput = async (e: any) => {
-        const q: string = e.target.value
-        await this.search(q)
+    handleInput = async (e: Event) => {
+        this.search((e.target as HTMLInputElement).value)
+    }
+
+    scrollUp = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     search = async (q: string, offset: number = 0) => {
@@ -59,21 +73,30 @@ export default class Search extends Component<Type.HomeProps>{
         if (!q) {
             return
         }
+
         this.setState({
-            searchText: q,
-            searchResultList: this.placeholder,
-            offset: offset
+            searching: true,
+            searchResultList: this.placeholder
         })
 
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-
-        const res = await fetch(`${process.env.PREACT_APP_API}?q=${q}&offset=${offset}`, {
+        const fetchAPI = fetch(`${process.env.PREACT_APP_API}?q=${q}&offset=${offset}`, {
             mode: 'cors'
         })
-
+        this.scrollUp()
+        let ResultList: Type.SearchResult[]
+        try {
+            ResultList = await (await fetchAPI).json()
+        }
+        catch{
+            ResultList = [{
+                title: 'Error',
+                url: 'Fetch api error'
+            }]
+        }
         this.setState({
+            searching: false,
             searchText: q,
-            searchResultList: await res.json(),
+            searchResultList: ResultList,
             offset: offset
         })
     }
@@ -91,21 +114,34 @@ export default class Search extends Component<Type.HomeProps>{
         }
     }
 
-    render(props: any, state: Type.SearchState) {
+    render() {
         return (
             <div>
                 <h1 className={style.h1}>Search</h1>
-                <form className={style.form} onSubmit={this.handleSubmit}>
-                    <input
-                        onChange={this.handleInput}
-                        className={style.input}
-                        type="text"
-                    />
+                <form
+                    className={style.form}
+                    onSubmit={this.handleSubmit}
+                >
+                    <label for="search">
+                        <input
+                            id="search"
+                            onChange={this.handleInput}
+                            className={style.input}
+                            type="text"
+                        />
+                    </label>
                 </form>
                 <Navigator changeOffset={this.changeOffset} />
                 <ul rel="results">
                     {
-                        state.searchResultList.map((result, id) => <Result key={id} data={result} />)
+                        this.state.searchResultList.map(
+                            (result, id) =>
+                                <Result
+                                    searching={this.state.searching}
+                                    key={id}
+                                    data={result}
+                                />
+                        )
                     }
                 </ul>
                 <Navigator changeOffset={this.changeOffset} />
